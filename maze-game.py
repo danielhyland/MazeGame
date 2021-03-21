@@ -17,12 +17,13 @@ BROWN = (165, 42, 42, 1)
 GREEN_BROWN = (165,128,42,1)
 ORANGE= (156,45,0,4)
 LIGHT_GREEN = (42, 159,0,45)
+DARK_NAVY = (7,23,65)
 worldx = 1280
 worldy = 704
 tx=64
 ty=64
-steps=10
-fps   = 50 # frame rate
+steps= 12
+fps   = 50# frame rate
 ani   = 4   # animation cycles
 '''
 Mazes
@@ -34,10 +35,10 @@ maze1=[[0,0,0,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0],
        [1,1,0,1,0,2,1,0,1,0,0,0,0,0,0,1,1,1,0,1],
        [0,2,0,1,1,1,1,0,1,1,1,1,0,0,0,1,2,0,0,1],
        [0,1,0,1,1,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1],
-       [0,1,0,1,1,1,0,0,1,0,1,0,0,1,0,1,1,1,0,0],
-       [0,1,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,0],
-       [0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,1,0],
-       [0,0,2,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0]]
+       [0,1,0,1,1,1,0,0,1,0,1,0,0,1,0,1,1,1,0,1],
+       [0,1,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,1],
+       [0,1,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1],
+       [0,0,2,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1]]
        
 
   
@@ -58,7 +59,7 @@ Objects
 '''
 class Player (pygame.sprite.Sprite):
     def __init__ (self, x, y, imgfile="Elf1.png"):
-        (sizex, sizey)=(45,45)
+        (sizex, sizey)=(42,42)
         pygame.sprite.Sprite.__init__(self)
         img = pygame.image.load(os.path.join('Images',imgfile)).convert()
         img = pygame.transform.scale(img,(sizex, sizey))
@@ -85,6 +86,10 @@ class Player (pygame.sprite.Sprite):
         self.rect.y = self.rect.y + self.movey
         if self.rect.x < 0:
             self.rect.x =0
+        if self.rect.y <0:
+            self.rect.y =0
+        if self.rect.y > worldy:
+            self.rect.y = worldy
         if self.rect.x > worldx-tx:
             if self.collectedchest:
                 self.levelcomplete=True
@@ -149,18 +154,18 @@ world    = pygame.display.set_mode([worldx,worldy])
 #ball=Ball(600, 50)
 #ball_list=pygame.sprite.Group()
 #ball_list.add(ball)
-lvl=1
+lvl=2
 if lvl==1:
     px=0
-    py=int(5*ty)
-    colour=GREEN_BROWN
-    chestx=11*tx
+    py=0
+    colour=LIGHT_GREEN
+    chestx=10*tx
     chesty=3*ty
     maze=maze1
 if lvl==2:
     px=0
     py=5*ty
-    colour=BLACK
+    colour=DARK_NAVY
     chestx=10*tx
     chesty=6*ty
     maze=maze2
